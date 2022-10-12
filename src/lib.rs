@@ -9,19 +9,35 @@ use ff::*;
 pub struct Fr(FrRepr);
 
 // String -> Fr
-pub fn str_to_fr(s: &str) -> Fr {
+pub const fn str_to_fr(_s: &str) -> Fr {
     todo!();
 }
 
 // Load constants
-pub fn load_constants() -> Vec<Fr> {
-    let c_str = constants::constants();
-    let mut c: Vec<Fr> = Vec::new();
-    for i in 0..c_str.len() {
+// TODO make load_constants a const fn
+pub fn load_constants() -> [Fr; 220] {
+    let c_str = constants::C_STR;
+    let mut c: [Fr; 220] = [Fr::zero(); 220];
+
+    let mut i = 0;
+    loop {
         let b: Fr = str_to_fr(c_str[i]);
-        c.push(b);
+        c[i] = b;
+
+        if i == c_str.len() {
+            return c;
+        } else {
+            i += 1;
+        }
     }
-    return c;
+}
+
+pub fn hash(x_in: Fr, k: Fr) -> Fr {
+    todo!();
+}
+
+pub fn multihash(arr: Vec<Fr>, key: Fr) {
+    todo!();
 }
 
 #[cfg(test)]
