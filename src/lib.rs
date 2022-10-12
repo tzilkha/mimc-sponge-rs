@@ -9,8 +9,8 @@ use ff::*;
 pub struct Fr(FrRepr);
 
 // String -> Fr
-pub const fn str_to_fr(_s: &str) -> Fr {
-    todo!();
+pub fn str_to_fr(_s: &str) -> Fr {
+    Fr::from_str(_s).unwrap()
 }
 
 // Load constants
@@ -45,5 +45,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn it_works() {}
+    fn it_works() {
+        load_constants();
+    }
 }
