@@ -6,3 +6,9 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+ff = {package="ff_ce" , version="0.11", features = ["derive"]}
+rand = "0.4"
+
+[[bin]]
+name = "example"
+path = "src/lib.rs"
