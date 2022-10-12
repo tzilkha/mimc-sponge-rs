@@ -21,13 +21,12 @@ pub fn load_constants() -> [Fr; 220] {
 
     let mut i = 0;
     loop {
-        let b: Fr = str_to_fr(c_str[i]);
-        c[i] = b;
-
-        if i == c_str.len() {
-            return c;
-        } else {
+        if i < c_str.len() {
+            let b: Fr = str_to_fr(c_str[i]);
+            c[i] = b;
             i += 1;
+        } else {
+            return c;
         }
     }
 }
