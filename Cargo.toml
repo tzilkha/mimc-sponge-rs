@@ -6,7 +6,3 @@ edition = "2021"
 [dependencies]
 ff = { package="ff_ce", version="0.11", features = ["derive"] }
 rand = "0.4"
-
-[[bin]]
-name = "example"
-path = "src/lib.rs"

@@ -1,7 +1,9 @@
+#![allow(clippy::derive_hash_xor_eq)]
+#![allow(clippy::too_many_arguments)]
+
 mod constants;
-extern crate ff;
-extern crate rand;
-use ff::*;
+
+use ff::{self, *};
 
 #[derive(PrimeField)]
 #[PrimeFieldModulus = "21888242871839275222246405745257275088548364400416034343698204186575808495617"]
