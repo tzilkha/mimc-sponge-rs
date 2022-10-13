@@ -33,12 +33,24 @@ pub fn load_constants() -> [Fr; 220] {
     }
 }
 
-pub fn hash(x_in: Fr, k: Fr) -> Fr {
-    todo!();
+struct MimcSponge {
+    c: [Fr; 220],
 }
 
-pub fn multihash(arr: Vec<Fr>, key: Fr) {
-    todo!();
+impl MimcSponge {
+    pub fn new() -> MimcSponge {
+        MimcSponge {
+            c: load_constants(),
+        }
+    }
+
+    pub fn hash(&self, x_in: Fr, k: Fr) -> Fr {
+        todo!();
+    }
+
+    pub fn multihash(&self, arr: Vec<Fr>, key: Fr) {
+        todo!();
+    }
 }
 
 #[cfg(test)]
