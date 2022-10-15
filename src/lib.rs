@@ -33,7 +33,7 @@ fn load_constants() -> [Fr; 220] {
     }
 }
 
-struct MimcSponge {
+pub struct MimcSponge {
     c: [Fr; 220],
 }
 
