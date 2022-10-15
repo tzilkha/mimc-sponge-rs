@@ -37,19 +37,21 @@ pub struct MimcSponge {
     c: [Fr; 220],
 }
 
-impl MimcSponge {
-    pub fn new() -> MimcSponge {
-        MimcSponge {
+impl Default for MimcSponge {
+    fn default() -> Self {
+        Self {
             c: load_constants(),
         }
     }
+}
 
-    pub fn hash(&self, _xL_in: Fr, _xR_in: Fr, _k: Fr) -> (Fr, Fr) {
+impl MimcSponge {
+    fn hash(&self, _xL_in: Fr, _xR_in: Fr, _k: Fr) -> (Fr, Fr) {
         let mut t;
         let mut c;
 
-        let mut xL = Fr::from(_xL_in);
-        let mut xR = Fr::from(_xR_in);
+        let mut xL = _xL_in;
+        let mut xR = _xR_in;
         let mut xR_tmp;
 
         for i in 0..220 {
@@ -63,9 +65,9 @@ impl MimcSponge {
                 t.add_assign(&c);
             }
 
-            t = t.pow([5 as u64]);
+            t = t.pow([5u64]);
 
-            xR_tmp = Fr::from(xR);
+            xR_tmp = xR;
             xR_tmp.add_assign(&t);
 
             if i < (219) {
@@ -76,15 +78,16 @@ impl MimcSponge {
             }
         }
 
-        return (xL, xR);
+        (xL, xR)
     }
 
-    pub fn multi_hash(&self, arr: Vec<Fr>, key: Fr, numOutputs: u64) -> Vec<Fr> {
+    /// Takes &slice of Fr elements, key and num_outputs
+    pub fn multi_hash(&self, arr: &[Fr], key: Fr, num_outputs: u64) -> Vec<Fr> {
         let mut r = Fr::zero();
         let mut c = Fr::zero();
 
-        for i in 0..arr.len() {
-            r.add_assign(&arr[i]);
+        for elem in arr {
+            r.add_assign(elem);
             let s: (Fr, Fr) = self.hash(r, c, key);
             (r, c) = s;
         }
@@ -92,7 +95,7 @@ impl MimcSponge {
         let mut out = Vec::new();
         out.push(r);
 
-        for _ in 1..numOutputs {
+        for _ in 1..num_outputs {
             let s = self.hash(r, c, key);
             (r, c) = s;
             out.push(r);
@@ -108,15 +111,13 @@ mod tests {
 
     #[test]
     fn it_works() {
-        let mut arr = Vec::new();
-        arr.push(Fr::from_str("1").unwrap());
-        arr.push(Fr::from_str("2").unwrap());
+        let arr = vec![Fr::from_str("1").unwrap(), Fr::from_str("2").unwrap()];
 
         let k = Fr::zero();
 
-        let ms = MimcSponge::new();
+        let ms = MimcSponge::default();
 
-        let res = ms.multi_hash(arr, k, 1);
+        let res = ms.multi_hash(&arr, k, 1);
 
         let EXPECTED = "Fr(0x2bcea035a1251603f1ceaf73cd4ae89427c47075bb8e3a944039ff1e3d6d2a6f)";
 
