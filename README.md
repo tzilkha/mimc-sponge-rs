@@ -10,5 +10,5 @@
 ## How to use
 ```toml
 [dependencies]
-near-mimc-rs = { git = "https://github.com/tzilkha/mimc-sponge-rs" }
+mimc-sponge-rs = { git = "https://github.com/tzilkha/mimc-sponge-rs" }
 ```
