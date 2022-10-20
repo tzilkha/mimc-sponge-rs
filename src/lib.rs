@@ -1,3 +1,5 @@
+#![allow(clippy::derive_hash_xor_eq)]
+#![allow(clippy::too_many_arguments)]
 mod constants;
 
 use constants::C_STR;
@@ -44,7 +46,7 @@ impl MimcSponge {
             t.add_assign(&k);
 
             if i > 0 {
-                t.add_assign(&c);
+                t.add_assign(c);
             }
 
             t = t.pow([5u64]);
